@@ -36,6 +36,7 @@ public class CreateServlet extends HttpServlet {
             EntityManager em = DBUtil.createEntityManager();
             em.getTransaction().begin();
 
+
             Message m = new Message();
 
             String title = request.getParameter("title");
@@ -48,8 +49,12 @@ public class CreateServlet extends HttpServlet {
             m.setCreated_at(currentTime);
             m.setUpdated_at(currentTime);
 
+
+
+         // データベースに保存
             em.persist(m);
             em.getTransaction().commit();
+            request.getSession().setAttribute("flush", "登録が完了しました。");       // ここを追記
             em.close();
 
             response.sendRedirect(request.getContextPath() + "/index");
